@@ -59,6 +59,12 @@
 
 // @lc code=start
 type Coord = { rowIdx: number; colIdx: number };
+type Limits = {
+  maxCol: number;
+  maxRow: number;
+  minCol: number;
+  minRow: number;
+};
 
 const cToS = (c: Coord): string => {
   return `${c.rowIdx}-${c.colIdx}`;
@@ -69,7 +75,20 @@ const sToC = (s: string): Coord => {
   return { rowIdx, colIdx };
 };
 
-export function numIslands(grid: string[][]): number {
+const isMarkedCoord = (c: Coord, marked: Set<string>) => {
+  return marked.has(cToS(c));
+};
+
+const isLand = (item: string) => item === "1";
+
+const getNeighbors = ({ rowIdx, colIdx }: Coord): Coord[] => [
+  { rowIdx: rowIdx - 1, colIdx },
+  { rowIdx: rowIdx + 1, colIdx },
+  { rowIdx, colIdx: colIdx + 1 },
+  { rowIdx, colIdx: colIdx - 1 },
+];
+
+const getGridLimits = (grid: string[][]): Limits => {
   const maxRow = grid.length - 1;
   const maxCol = grid?.[0]?.length - 1;
   if (maxCol < 0) {
@@ -77,35 +96,29 @@ export function numIslands(grid: string[][]): number {
   }
   const minCol = 0;
   const minRow = 0;
+  return { maxRow, maxCol, minCol, minRow };
+};
 
-  const isValidCoord = ({ rowIdx, colIdx }: Coord) => {
+const getCoordValidator =
+  (limits: Limits) =>
+  ({ rowIdx, colIdx }: Coord) => {
     return (
-      rowIdx >= minRow &&
-      rowIdx <= maxRow &&
-      colIdx >= minCol &&
-      colIdx <= maxCol
+      rowIdx >= limits.minRow &&
+      rowIdx <= limits.maxRow &&
+      colIdx >= limits.minCol &&
+      colIdx <= limits.maxCol
     );
   };
 
-  const isMarkedCoord = (c: Coord, marked: Set<string>) => {
-    return marked.has(cToS(c));
-  };
-
-  const isLand = (item: string) => item === "1";
-
+export function numIslands(grid: string[][]): number {
+  const coordValidator = getCoordValidator(getGridLimits(grid));
   const dfs = (c: Coord, marked: Set<string>) => {
     marked.add(cToS(c));
-    const { rowIdx, colIdx } = c;
-    const neighbors: Coord[] = [
-      { rowIdx: rowIdx - 1, colIdx },
-      { rowIdx: rowIdx + 1, colIdx },
-      { rowIdx, colIdx: colIdx + 1 },
-      { rowIdx, colIdx: colIdx - 1 },
-    ]
-      .filter(isValidCoord)
+    getNeighbors(c)
+      .filter(coordValidator)
       .filter((c) => !isMarkedCoord(c, marked))
-      .filter(({ rowIdx, colIdx }) => isLand(grid[rowIdx][colIdx]));
-    neighbors.forEach((c) => dfs(c, marked));
+      .filter(({ rowIdx, colIdx }) => isLand(grid[rowIdx][colIdx]))
+      .forEach((c) => dfs(c, marked));
   };
 
   let count = 0;
