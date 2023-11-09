@@ -20,9 +20,7 @@
  * horizontally or vertically. You may assume all four edges of the grid are
  * all surrounded by water.
  *
- *
  * Example 1:
- *
  *
  * Input: grid = [
  * ⁠ ["1","1","1","1","0"],
@@ -32,9 +30,7 @@
  * ]
  * Output: 1
  *
- *
  * Example 2:
- *
  *
  * Input: grid = [
  * ⁠ ["1","1","0","0","0"],
@@ -44,17 +40,12 @@
  * ]
  * Output: 3
  *
- *
- *
  * Constraints:
- *
  *
  * m == grid.length
  * n == grid[i].length
  * 1 <= m, n <= 300
  * grid[i][j] is '0' or '1'.
- *
- *
  */
 
 // @lc code=start
@@ -99,16 +90,14 @@ const getGridLimits = (grid: string[][]): Limits => {
   return { maxRow, maxCol, minCol, minRow };
 };
 
-const getCoordValidator =
-  (limits: Limits) =>
-  ({ rowIdx, colIdx }: Coord) => {
-    return (
-      rowIdx >= limits.minRow &&
-      rowIdx <= limits.maxRow &&
-      colIdx >= limits.minCol &&
-      colIdx <= limits.maxCol
-    );
-  };
+const getCoordValidator = (limits: Limits) => ({ rowIdx, colIdx }: Coord) => {
+  return (
+    rowIdx >= limits.minRow &&
+    rowIdx <= limits.maxRow &&
+    colIdx >= limits.minCol &&
+    colIdx <= limits.maxCol
+  );
+};
 
 export function numIslands(grid: string[][]): number {
   const coordValidator = getCoordValidator(getGridLimits(grid));
