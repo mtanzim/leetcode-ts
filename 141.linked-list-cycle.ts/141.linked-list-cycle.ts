@@ -1,3 +1,4 @@
+// deno-lint-ignore-file no-irregular-whitespace
 /*
  * @lc app=leetcode id=141 lang=typescript
  *

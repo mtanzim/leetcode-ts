@@ -51,6 +51,7 @@ export class ListNode {
   }
   toString(): string {
     let s = "";
+    // deno-lint-ignore no-this-alias
     let cur: ListNode | null | undefined = this;
     while (cur) {
       s += `${cur.val} -> `;
