@@ -14,6 +14,7 @@ function twoSum(numbers: number[], target: number): number[] {
     }
     l++;
   }
+  return [];
 }
 
 Deno.test("basic", () => {
