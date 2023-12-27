@@ -1,5 +1,7 @@
 # leetcode-ts
 
+To run tests: `deno task tests`. Tests are inlined in the same files for convenience.
+
 ## Why
 
 - Sharpen the iron some more
