@@ -66,4 +66,23 @@ function isAnagram(s: string, t: string): boolean {
   return true;
 }
 // @lc code=end
-export { isAnagram };
+
+import { assertEquals } from "https://deno.land/std@0.167.0/testing/asserts.ts";
+
+Deno.test({
+  name: "a test case",
+  fn() {
+    const s = "anagram";
+    const t = "nagaram";
+    assertEquals(isAnagram(s, t), true);
+  },
+});
+
+Deno.test({
+  name: "another test case",
+  fn() {
+    const s = "rat";
+    const t = "car";
+    assertEquals(isAnagram(s, t), false);
+  },
+});

@@ -38,4 +38,23 @@ function containsDuplicate(nums: number[]): boolean {
   return set.size !== nums.length;
 }
 // @lc code=end
-export default containsDuplicate;
+
+import { assertEquals } from "https://deno.land/std@0.167.0/testing/asserts.ts";
+
+Deno.test({
+  name: "a test case",
+  fn() {
+    const nums = [1, 2, 3, 1];
+    const expect = true;
+    assertEquals(containsDuplicate(nums), expect);
+  },
+});
+
+Deno.test({
+  name: "negative test case",
+  fn() {
+    const nums = [1, 2, 3];
+    const expect = false;
+    assertEquals(containsDuplicate(nums), expect);
+  },
+});
