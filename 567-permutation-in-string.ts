@@ -24,7 +24,8 @@ Deno.test("basic 2", () => {
 
 function checkInclusion(s1: string, s2: string): boolean {
   let [i1, i2] = [0, 0];
-  let hm1 = makeHm(s1);
+  const hm1Orig = makeHm(s1);
+  let hm1 = JSON.parse(JSON.stringify(hm1Orig));
 
   function makeHm(v: string): Record<string, number> {
     return v.split("").reduce((acc, cur) => {
@@ -54,7 +55,7 @@ function checkInclusion(s1: string, s2: string): boolean {
     } else {
       if (i1 > 0) {
         i1 = 0;
-        hm1 = makeHm(s1);
+        hm1 = JSON.parse(JSON.stringify(hm1Orig));
         i2 = previ2;
       }
     }
