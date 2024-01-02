@@ -1,4 +1,4 @@
-// https://www.lintcode.com/problem/920/
+// https://www.lintcode.com/problem/919/
 
 import { assertEquals } from "https://deno.land/std@0.167.0/testing/asserts.ts";
 
