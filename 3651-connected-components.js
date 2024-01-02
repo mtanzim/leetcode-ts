@@ -3,12 +3,6 @@
 import { assertEquals } from "https://deno.land/std@0.106.0/testing/asserts.ts";
 
 export class Solution {
-  /**
-   * @param n: the number of vertices
-   * @param edges: the edges of undirected graph
-   * @return: the number of connected components
-   */
-
   makeAdj(n, edges) {
     const adjList = [];
     for (let i = 0; i < n; i++) {
@@ -44,7 +38,11 @@ export class Solution {
     }
     return 1;
   }
-
+  /**
+   * @param n: the number of vertices
+   * @param edges: the edges of undirected graph
+   * @return: the number of connected components
+   */
   countComponents(n, edges) {
     const adj = this.makeAdj(n, edges);
     const visited = new Set();
