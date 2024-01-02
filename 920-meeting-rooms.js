@@ -16,7 +16,6 @@ export class Solution {
    * @return: if a person could attend all meetings
    */
   canAttendMeetings(intervals) {
-    // just mutate, who know what JS version :shrug
     const is = intervals.slice().sort((a, b) => a.start - b.start);
     for (let i = 1; i < is.length; i++) {
       if (is[i - 1].end > is[i].start) {
