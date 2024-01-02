@@ -46,7 +46,6 @@ export class Solution {
   countComponents(n, edges) {
     const adj = this.makeAdj(n, edges);
     const visited = new Set();
-    console.log({ adj });
     let connectedComponents = 0;
     for (let i = 0; i < n; i++) {
       connectedComponents += this.bfs(adj, i, visited);
