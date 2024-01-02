@@ -2,11 +2,7 @@ import { assertEquals } from "https://deno.land/std@0.106.0/testing/asserts.ts";
 
 type Coord = { ri: number; ci: number };
 
-function cToS(c: Coord): string {
-  return `ri:${c.ri}-ci:${c.ci}`;
-}
-
-function bfs(grid: number[][], source: Coord, visited: Set<string>): number {
+function bfs(grid: number[][], source: Coord, visited: boolean[][]): number {
   let areaCount = 0;
 
   if (grid[source.ri][source.ci] !== 1) {
@@ -18,10 +14,10 @@ function bfs(grid: number[][], source: Coord, visited: Set<string>): number {
     if (!cur) {
       throw Error("empty queue");
     }
-    if (visited.has(cToS(cur))) {
+    if (visited?.[cur.ri]?.[cur.ci]) {
       continue;
     }
-    visited.add(cToS(cur));
+    visited[cur.ri][cur.ci] = true;
     areaCount++;
     const ds = [[0, 1], [0, -1], [1, 0], [-1, 0]];
     ds.map(([dr, dc]) => {
@@ -38,9 +34,9 @@ function bfs(grid: number[][], source: Coord, visited: Set<string>): number {
 
 function maxAreaOfIsland(grid: number[][]): number {
   let max = Number.MIN_SAFE_INTEGER;
-  const visited = new Set<string>();
+  const visited = grid.map((row) => row.map((_) => false));
   grid.forEach((row, ri) => {
-    row.forEach((v, ci) => {
+    row.forEach((_v, ci) => {
       const curCount = bfs(grid, { ri, ci }, visited);
       max = Math.max(max, curCount);
     });
