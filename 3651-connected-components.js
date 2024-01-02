@@ -33,7 +33,7 @@ export class Solution {
       if (visited.has(curNode)) {
         continue;
       }
-      visited.add(String(curNode));
+      visited.add(curNode);
       const neighbors = adj[curNode];
       neighbors.forEach((n) => {
         if (visited.has(n)) {
