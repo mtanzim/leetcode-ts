@@ -17,9 +17,9 @@ export class Solution {
    */
   canAttendMeetings(intervals) {
     // just mutate, who know what JS version :shrug
-    intervals.sort((a, b) => a.start - b.start);
-    for (let i = 1; i < intervals.length; i++) {
-      if (intervals[i - 1].end > intervals[i].start) {
+    const is = intervals.slice().sort((a, b) => a.start - b.start);
+    for (let i = 1; i < is.length; i++) {
+      if (is[i - 1].end > is[i].start) {
         return false;
       }
     }

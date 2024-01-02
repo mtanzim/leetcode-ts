@@ -21,6 +21,7 @@ export class Solution {
         { time: i.start, type: "start" },
         { time: i.end, type: "end" },
       ])
+      .slice()
       .sort((a, b) => a.time - b.time);
     let max = Number.MIN_SAFE_INTEGER;
     let count = 0;
