@@ -7,33 +7,34 @@ class Node {
   }
 }
 
-function dfs(node: Node | null, visited: Set<number>): Node | null {
+function dfs(node: Node | null, visited: Map<number, Node>): Node | null {
   if (!node) {
     return null;
   }
   if (visited.has(node.val)) {
-    return null;
+    return visited.get(node.val) || null;
   }
-  visited.add(node.val);
-  const neighbors = node.neighbors.map((n) => dfs(n, visited)).filter(
+  const newNode = new Node(node.val);
+  visited.set(node.val, newNode);
+  newNode.neighbors = node.neighbors.map((n) => dfs(n, visited)).filter(
     Boolean,
   ) as Node[];
-  return new Node(node.val, neighbors);
+  return newNode;
 }
 
 function cloneGraph(node: Node | null): Node | null {
-  return dfs(node, new Set());
+  return dfs(node, new Map());
 }
 
 Deno.test("basic", () => {
-  const nodes = [[2, 4], [1, 3], [2, 4], [1, 3]];
-  const nodesOnly = [];
-  for (let i = 0; i < nodes.length; i++) {
+  const nodesArr = [[2, 4], [1, 3], [2, 4], [1, 3]];
+  const nodesOnly: Node[] = [];
+  for (let i = 0; i < nodesArr.length; i++) {
     nodesOnly[i] = new Node(i + 1);
   }
-  for (let i = 0; i < nodes.length; i++) {
+  for (let i = 0; i < nodesArr.length; i++) {
     const curNode = nodesOnly[i];
-    curNode.neighbors = nodes[i].map((n) => nodesOnly[n-1]);
+    curNode.neighbors = nodesArr[i].map((n) => nodesOnly[n - 1]);
   }
   console.log(nodesOnly);
   const cloned = cloneGraph(nodesOnly[0]);
