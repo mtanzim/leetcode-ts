@@ -1,3 +1,5 @@
+import { assertEquals } from "https://deno.land/std@0.167.0/testing/asserts.ts";
+
 class Node {
   val: number;
   neighbors: Node[];
@@ -36,7 +38,23 @@ Deno.test("basic", () => {
     const curNode = nodesOnly[i];
     curNode.neighbors = nodesArr[i].map((n) => nodesOnly[n - 1]);
   }
-  console.log(nodesOnly);
   const cloned = cloneGraph(nodesOnly[0]);
-  console.log(cloned);
+  const clonedArr: number[][] = [];
+  const q = [cloned];
+  const visited = new Set();
+  // iterative dfs
+  while (q.length > 0) {
+    const cur = q.pop();
+    if (!cur) {
+      continue;
+    }
+    if (visited.has(cur)) {
+      continue;
+    }
+    visited.add(cur);
+    clonedArr[cur.val] = cur.neighbors.map((n) => n.val);
+    cur.neighbors.forEach((n) => q.push(n));
+  }
+  const clonedArrAdjused = clonedArr.slice(1);
+  assertEquals(clonedArrAdjused, nodesArr);
 });
