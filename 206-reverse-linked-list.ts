@@ -29,21 +29,6 @@ function reverseList(head: ListNode | null): ListNode | null {
   return ll;
 }
 
-function reverseListRecurse(head: ListNode | null): ListNode | null {
-  function traverse(
-    prev: ListNode | null,
-    node: ListNode | null,
-  ): ListNode | null {
-    if (node === null) {
-      return null;
-    }
-    node.next = prev;
-    prev!.next = null;
-    return traverse(node, node.next);
-  }
-  return traverse(head, head?.next);
-}
-
 Deno.test("basic", () => {
   const vs = [1, 2, 3, 4, 5];
   const ll = new ListNode(vs[0]);
@@ -54,27 +39,6 @@ Deno.test("basic", () => {
   }
   console.log(ll);
   const reversedLL = reverseList(ll);
-  const rev = [];
-  let revCur = reversedLL;
-  while (revCur) {
-    console.log(revCur.val);
-    rev.push(revCur?.val);
-    revCur = revCur?.next || null;
-  }
-  assertEquals(rev, vs.toReversed());
-  console.log(reversedLL);
-});
-
-Deno.test("basic recurse", () => {
-  const vs = [1, 2, 3, 4, 5];
-  const ll = new ListNode(vs[0]);
-  let cur = ll;
-  for (const v of vs.slice(1)) {
-    cur.next = new ListNode(v, null);
-    cur = cur.next;
-  }
-  console.log(ll);
-  const reversedLL = reverseListRecurse(ll);
   const rev = [];
   let revCur = reversedLL;
   while (revCur) {
