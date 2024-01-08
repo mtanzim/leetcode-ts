@@ -5,10 +5,6 @@ type Coord = {
   ci: number;
 };
 function spiralOrder(matrix: number[][]): number[] {
-  const minRow = 0;
-  const maxRow = matrix.length - 1;
-  const minCol = 0;
-  const maxCol = matrix[0].length - 1;
   const visited = new Set<string>();
   const res: number[] = [];
 
@@ -29,8 +25,8 @@ function spiralOrder(matrix: number[][]): number[] {
     const nextCoord = curDirFn(curCoord);
     // went out of bounds
     if (
-      nextCoord.ri > maxRow || nextCoord.ri < minRow || nextCoord.ci > maxCol ||
-      nextCoord.ci < minCol || visited.has(toS(nextCoord))
+      visited.has(toS(nextCoord)) ||
+      matrix?.[nextCoord.ri]?.[nextCoord.ci] === undefined
     ) {
       // update direction function
       curCycleIndex = (curCycleIndex + 1) % cycle.length;
